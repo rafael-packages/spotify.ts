@@ -1,62 +1,62 @@
 # spotify.ts
 
-O client definitivo para a API do Spotify, 100% tipado, cobrindo todo o catálogo e autenticação, sem depender de nenhuma biblioteca de terceiros.
+The definitive client for the Spotify API, 100% typed, covering the entire catalog and authentication, without depending on any third-party libraries.
 
-## Características
+## Features
 
-- 🛡️ **100% da API Mapeada**: Álbuns, Artistas, Tracks, Playlists, Usuários, Podcasts, Episódios, Audiobooks, Capítulos, Categorias, Gêneros, Mercados e Player.
-- 📦 **Zero Dependências**: Feito no `fetch` nativo. Roda liso no Node.js, Bun, Edge ou Serverless.
-- 🔑 **Autenticação Automática e Manual**: Suporte completo a **Client Credentials** (público) gerido automaticamente e **User Token** (para player e dados privados via OAuth2).
-- 🚦 **Rate Limiting e Cache**: Fila de requests embutida pra você não tomar block 429 e cache em memória pra otimizar o tempo de resposta.
+- 🛡️ **100% API Mapped**: Albums, Artists, Tracks, Playlists, Users, Podcasts, Episodes, Audiobooks, Chapters, Categories, Genres, Markets, and Player.
+- 📦 **Zero Dependencies**: Built on native `fetch`. Runs smoothly in Node.js, Bun, Edge, or Serverless.
+- 🔑 **Automatic and Manual Authentication**: Full support for **Client Credentials** (public) managed automatically and **User Token** (for player and private data via OAuth2).
+- 🚦 **Rate Limiting and Cache**: Built-in request queue so you don't get 429 blocked and in-memory cache to optimize response times.
 
-## Instalação
+## Installation
 
 ```bash
 npm install github:realkalashnikov/spotify.ts
 ```
 
-## Uso: Acesso Público (Client Credentials)
+## Usage: Public Access (Client Credentials)
 
-Você precisará de um `Client ID` e um `Client Secret` do [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
+You will need a `Client ID` and a `Client Secret` from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
 
 ```typescript
 import { SpotifyClient } from 'spotify.ts';
 
 const client = new SpotifyClient({
-  clientId: 'SEU_CLIENT_ID',
-  clientSecret: 'SEU_CLIENT_SECRET'
+  clientId: 'YOUR_CLIENT_ID',
+  clientSecret: 'YOUR_CLIENT_SECRET'
 });
 
 async function run() {
-  // Buscar os dados do artista
+  // Fetch artist data
   const artist = await client.artists.get('4tZwfgrHOc3mvqYlEYSvVi'); // Daft Punk
 
-  // Recomendações e Audio Features de uma música
+  // Recommendations and Audio Features of a track
   const features = await client.tracks.getAudioFeatures('1jJci4qxiYcOB3o2xEsnCG');
   
-  // Buscar podcasts e audiobooks
+  // Fetch podcasts and audiobooks
   const podcast = await client.shows.get('some_show_id');
   const chapters = await client.audiobooks.getChapters('some_book_id');
 }
 ```
 
-## Uso: Acesso Privado (User Token / Player)
+## Usage: Private Access (User Token / Player)
 
-Se você precisa ler a biblioteca pessoal do usuário, ver histórico ou controlar o Player (Play/Pause), você precisa fornecer o User Token autenticado pelo usuário.
+If you need to read the user's personal library, view history, or control the Player (Play/Pause), you need to provide the User Token authenticated by the user.
 
 ```typescript
-// Você pode usar o módulo nativo auth para gerar o login
+// You can use the native auth module to generate the login
 const loginUrl = client.auth.getLoginUrl('http://localhost/callback', ['user-modify-playback-state', 'user-library-read']);
 
-// Depois de trocar o código, você diz pro client usar esse token do usuário:
-client.setUserToken('BQC...token_do_usuario_logado');
+// After exchanging the code, you tell the client to use this logged-in user token:
+client.setUserToken('BQC...logged_in_user_token');
 
-// E agora você tem acesso à magia!
+// And now you have access to the magic!
 await client.player.play();
 await client.player.next();
 await client.users.follow('artist', ['4tZwfgrHOc3mvqYlEYSvVi']);
 const savedAlbums = await client.users.savedAlbums();
 ```
 
-## Licença
+## License
 MIT

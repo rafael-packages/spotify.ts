@@ -13,13 +13,13 @@ describe('SpotifyClient', () => {
     client.clearCache();
   });
 
-  it('deve instanciar corretamente e jogar erro se faltar credenciais', () => {
+  it('should instantiate correctly and throw error if credentials are missing', () => {
     expect(client.albums).toBeDefined();
     
     expect(() => new SpotifyClient({} as any)).toThrow(SpotifyError);
   });
 
-  it('deve autenticar e buscar um artista (Daft Punk)', async () => {
+  it('should authenticate and fetch an artist (Daft Punk)', async () => {
     const fetchSpy = spyOn(globalThis, 'fetch').mockImplementation(async (url, options) => {
       if (typeof url === 'string' && url.includes('accounts.spotify.com')) {
         return new Response(JSON.stringify({
