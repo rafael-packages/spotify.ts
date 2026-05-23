@@ -121,4 +121,108 @@ export interface SpotifySearchResponse {
   artists?: SpotifyPaging<SpotifyArtist>;
   albums?: SpotifyPaging<SpotifyAlbum>;
   playlists?: SpotifyPaging<SpotifyPlaylist>;
+  shows?: SpotifyPaging<SpotifyShow>;
+  episodes?: SpotifyPaging<SpotifyEpisode>;
+  audiobooks?: SpotifyPaging<SpotifyAudiobook>;
+}
+
+export interface SpotifyShow {
+  id: string;
+  name: string;
+  description: string;
+  html_description: string;
+  explicit: boolean;
+  external_urls: SpotifyExternalUrls;
+  href: string;
+  images: SpotifyImage[];
+  is_externally_hosted: boolean;
+  languages: string[];
+  media_type: string;
+  publisher: string;
+  type: 'show';
+  uri: string;
+  total_episodes: number;
+}
+
+export interface SpotifyEpisode {
+  id: string;
+  name: string;
+  description: string;
+  html_description: string;
+  duration_ms: number;
+  explicit: boolean;
+  external_urls: SpotifyExternalUrls;
+  href: string;
+  images: SpotifyImage[];
+  is_externally_hosted: boolean;
+  is_playable: boolean;
+  languages: string[];
+  release_date: string;
+  release_date_precision: string;
+  type: 'episode';
+  uri: string;
+}
+
+export interface SpotifyAudiobook {
+  id: string;
+  name: string;
+  authors: { name: string }[];
+  narrators: { name: string }[];
+  description: string;
+  html_description: string;
+  explicit: boolean;
+  external_urls: SpotifyExternalUrls;
+  href: string;
+  images: SpotifyImage[];
+  languages: string[];
+  publisher: string;
+  type: 'audiobook';
+  uri: string;
+  total_chapters: number;
+}
+
+export interface SpotifyChapter {
+  id: string;
+  name: string;
+  description: string;
+  html_description: string;
+  duration_ms: number;
+  explicit: boolean;
+  external_urls: SpotifyExternalUrls;
+  href: string;
+  images: SpotifyImage[];
+  is_playable: boolean;
+  languages: string[];
+  release_date: string;
+  release_date_precision: string;
+  type: 'episode'; // Spotify treats chapters mostly like episodes
+  uri: string;
+}
+
+export interface SpotifyCategory {
+  id: string;
+  name: string;
+  href: string;
+  icons: SpotifyImage[];
+}
+
+export interface SpotifyAudioFeatures {
+  id: string;
+  acousticness: number;
+  analysis_url: string;
+  danceability: number;
+  duration_ms: number;
+  energy: number;
+  instrumentalness: number;
+  key: number;
+  liveness: number;
+  loudness: number;
+  mode: number;
+  speechiness: number;
+  tempo: number;
+  time_signature: number;
+  track_href: string;
+  type: 'audio_features';
+  uri: string;
+  valence: number;
 }
