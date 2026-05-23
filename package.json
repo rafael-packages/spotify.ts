@@ -1,0 +1,29 @@
+{
+  "name": "spotify.ts",
+  "version": "1.0.0",
+  "description": "Um client TypeScript fortemente tipado para a API do Spotify com suporte automático a OAuth2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "bun test",
+    "prepare": "bun run build"
+  },
+  "keywords": [
+    "spotify",
+    "api",
+    "typescript",
+    "client",
+    "music",
+    "oauth"
+  ],
+  "author": "realkalashnikov",
+  "license": "MIT",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1"
+  }
+}
