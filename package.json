@@ -1,5 +1,5 @@
 {
-  "name": "spotify.ts",
+  "name": "@rafaelsilvadeveloper/spotify.ts",
   "version": "1.0.0",
   "description": "Um client TypeScript fortemente tipado para a API do Spotify com suporte automático a OAuth2",
   "main": "dist/index.js",
