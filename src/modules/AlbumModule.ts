@@ -16,8 +16,14 @@ export class AlbumModule extends BaseModule {
   /**
    * Pega múltiplos álbuns numa pancada só.
    */
-  public async getMultiple(ids: string[], market: string = 'US'): Promise<{ albums: SpotifyAlbum[] }> {
-    return this.client.request<{ albums: SpotifyAlbum[] }>(`/albums`, { ids: ids.join(','), market });
+  public async getMultiple(
+    ids: string[],
+    market: string = 'US'
+  ): Promise<{ albums: SpotifyAlbum[] }> {
+    return this.client.request<{ albums: SpotifyAlbum[] }>(`/albums`, {
+      ids: ids.join(','),
+      market,
+    });
   }
 
   /**
@@ -30,7 +36,13 @@ export class AlbumModule extends BaseModule {
   /**
    * Traz os novos lançamentos do momento no Spotify.
    */
-  public async getNewReleases(country?: string, limit: number = 20): Promise<{ albums: SpotifyPaging<SpotifyAlbum> }> {
-    return this.client.request<{ albums: SpotifyPaging<SpotifyAlbum> }>(`/browse/new-releases`, { country, limit });
+  public async getNewReleases(
+    country?: string,
+    limit: number = 20
+  ): Promise<{ albums: SpotifyPaging<SpotifyAlbum> }> {
+    return this.client.request<{ albums: SpotifyPaging<SpotifyAlbum> }>(`/browse/new-releases`, {
+      country,
+      limit,
+    });
   }
 }

@@ -43,14 +43,14 @@ export class AuthModule extends BaseModule {
     const response = await fetch(this.tokenUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${auth}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        Authorization: `Basic ${auth}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code,
-        redirect_uri: redirectUri
-      }).toString()
+        redirect_uri: redirectUri,
+      }).toString(),
     });
 
     if (!response.ok) {
@@ -69,13 +69,13 @@ export class AuthModule extends BaseModule {
     const response = await fetch(this.tokenUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${auth}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        Authorization: `Basic ${auth}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: refreshToken
-      }).toString()
+        refresh_token: refreshToken,
+      }).toString(),
     });
 
     if (!response.ok) {

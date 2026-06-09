@@ -8,35 +8,41 @@ describe('SpotifyClient', () => {
   beforeEach(() => {
     client = new SpotifyClient({
       clientId: 'dummy-client-id',
-      clientSecret: 'dummy-client-secret'
+      clientSecret: 'dummy-client-secret',
     });
     client.clearCache();
   });
 
   it('should instantiate correctly and throw error if credentials are missing', () => {
     expect(client.albums).toBeDefined();
-    
+
     expect(() => new SpotifyClient({} as any)).toThrow(SpotifyError);
   });
 
   it('should authenticate and fetch an artist (Daft Punk)', async () => {
     const fetchSpy = spyOn(globalThis, 'fetch').mockImplementation(async (url, options) => {
       if (typeof url === 'string' && url.includes('accounts.spotify.com')) {
-        return new Response(JSON.stringify({
-          access_token: 'dummy-token',
-          token_type: 'Bearer',
-          expires_in: 3600
-        }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        return new Response(
+          JSON.stringify({
+            access_token: 'dummy-token',
+            token_type: 'Bearer',
+            expires_in: 3600,
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
       }
-      
-      return new Response(JSON.stringify({
-        id: '4tZwfgrHOc3mvqYlEYSvVi',
-        name: 'Daft Punk',
-        type: 'artist'
-      }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      });
+
+      return new Response(
+        JSON.stringify({
+          id: '4tZwfgrHOc3mvqYlEYSvVi',
+          name: 'Daft Punk',
+          type: 'artist',
+        }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     });
 
     const artist = await client.artists.get('4tZwfgrHOc3mvqYlEYSvVi');

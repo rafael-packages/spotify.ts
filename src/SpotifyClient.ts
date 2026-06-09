@@ -22,7 +22,7 @@ import { UserModule } from './modules/UserModule';
 export class SpotifyClient {
   private static readonly API_URL = 'https://api.spotify.com/v1';
   private static readonly AUTH_URL = 'https://accounts.spotify.com/api/token';
-  
+
   private rateLimiter: RateLimiter;
   private cache: CacheStore;
   public options: SpotifyOptions;
@@ -60,9 +60,9 @@ export class SpotifyClient {
     this.options = {
       timeout: 5000,
       maxRequestsPerSecond: 10,
-      ...options
+      ...options,
     };
-    
+
     this.rateLimiter = new RateLimiter(this.options.maxRequestsPerSecond, 1000);
     this.cache = new CacheStore(60);
 
@@ -111,14 +111,14 @@ export class SpotifyClient {
     }
 
     const authBase64 = btoa(`${this.options.clientId}:${this.options.clientSecret}`);
-    
+
     const response = await fetch(SpotifyClient.AUTH_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${authBase64}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        Authorization: `Basic ${authBase64}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: 'grant_type=client_credentials'
+      body: 'grant_type=client_credentials',
     });
 
     if (!response.ok) {
@@ -129,7 +129,7 @@ export class SpotifyClient {
       );
     }
 
-    const data = await response.json() as any;
+    const data = (await response.json()) as any;
     this.clientCredentialsToken = data.access_token;
     // Expires in 1h, reducing 1min for safety margin
     this.tokenExpiry = Date.now() + (data.expires_in - 60) * 1000;
@@ -141,18 +141,20 @@ export class SpotifyClient {
    * Dispatches a raw request (used internally by methods like POST/PUT).
    */
   public async rawRequest(endpoint: string, fetchOptions: RequestInit): Promise<Response> {
-    const url = new URL(`${SpotifyClient.API_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`);
+    const url = new URL(
+      `${SpotifyClient.API_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
+    );
     let requestUrl = url.toString();
-    const token = this.manualUserToken || await this.getClientToken();
+    const token = this.manualUserToken || (await this.getClientToken());
 
     let requestOptions: RequestInit = {
       ...fetchOptions,
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-        ...fetchOptions.headers
-      }
+        Authorization: `Bearer ${token}`,
+        ...fetchOptions.headers,
+      },
     };
 
     if (this.options.timeout) {
@@ -174,7 +176,7 @@ export class SpotifyClient {
         if (!response.ok) {
           let errorMsg = `HTTP Error: ${response.status} ${response.statusText}`;
           try {
-            const errData = await response.json() as any;
+            const errData = (await response.json()) as any;
             if (errData.error && errData.error.message) {
               errorMsg = errData.error.message;
             }
@@ -203,8 +205,10 @@ export class SpotifyClient {
     params: Record<string, any> = {},
     options: { cache?: boolean; ttl?: number } = {}
   ): Promise<T> {
-    const url = new URL(`${SpotifyClient.API_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`);
-    
+    const url = new URL(
+      `${SpotifyClient.API_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
+    );
+
     Object.entries(params).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         url.searchParams.append(key, String(value));
@@ -219,7 +223,7 @@ export class SpotifyClient {
     }
 
     const response = await this.rawRequest(urlString, { method: 'GET' });
-    let data = await response.json() as any;
+    let data = (await response.json()) as any;
 
     for (const interceptor of this.responseInterceptors) {
       data = await interceptor(data);

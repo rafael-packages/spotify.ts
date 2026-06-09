@@ -21,14 +21,22 @@ export class PlaylistModule extends BaseModule {
     limit: number = 20,
     offset: number = 0
   ): Promise<SpotifyPaging<{ track: SpotifyTrack }>> {
-    return this.client.request<SpotifyPaging<{ track: SpotifyTrack }>>(`/playlists/${id}/tracks`, { limit, offset });
+    return this.client.request<SpotifyPaging<{ track: SpotifyTrack }>>(`/playlists/${id}/tracks`, {
+      limit,
+      offset,
+    });
   }
 
   /**
    * Returns an async iterator to paginate over tracks in a playlist.
    */
-  public async *getTracksIterator(id: string, limit: number = 20): AsyncGenerator<SpotifyTrack, void, unknown> {
-    const generator = this.paginate<{ track: SpotifyTrack }>((offset) => this.getTracks(id, limit, offset));
+  public async *getTracksIterator(
+    id: string,
+    limit: number = 20
+  ): AsyncGenerator<SpotifyTrack, void, unknown> {
+    const generator = this.paginate<{ track: SpotifyTrack }>((offset) =>
+      this.getTracks(id, limit, offset)
+    );
     for await (const item of generator) {
       if (item.track) {
         yield item.track;

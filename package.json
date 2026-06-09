@@ -1,7 +1,7 @@
 {
   "name": "@rafaelsilvadeveloper/spotify.ts",
   "version": "1.0.1",
-  "description": "A strongly typed TypeScript client for the Spotify API with automatic OAuth2 support",
+  "description": "A strongly typed, zero-dependency TypeScript client for the Spotify API with automatic OAuth2 support, featuring rate limiting, caching, and async iterators.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/realkalashnikov/spotify.ts.git"
@@ -19,7 +19,9 @@
   "scripts": {
     "build": "tsc",
     "test": "bun test",
-    "prepare": "bun run build"
+    "prepare": "bun run build",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts tests/**/*.ts"
   },
   "keywords": [
     "spotify",
@@ -35,6 +37,10 @@
     "typescript": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1"
+    "@types/node": "^25.9.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3"
   }
 }

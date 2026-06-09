@@ -11,8 +11,15 @@ export class PlayerModule extends BaseModule {
   /**
    * Start or resume playback.
    */
-  public async play(options?: { context_uri?: string; uris?: string[]; offset?: { position: number } }): Promise<void> {
-    await this.client.rawRequest('/me/player/play', { method: 'PUT', body: JSON.stringify(options || {}) });
+  public async play(options?: {
+    context_uri?: string;
+    uris?: string[];
+    offset?: { position: number };
+  }): Promise<void> {
+    await this.client.rawRequest('/me/player/play', {
+      method: 'PUT',
+      body: JSON.stringify(options || {}),
+    });
   }
 
   /**
@@ -39,14 +46,21 @@ export class PlayerModule extends BaseModule {
   /**
    * Fetch user's recently played tracks.
    */
-  public async getRecentlyPlayed(limit: number = 20): Promise<SpotifyPaging<{ track: SpotifyTrack; played_at: string }>> {
-    return this.client.request<SpotifyPaging<{ track: SpotifyTrack; played_at: string }>>(`/me/player/recently-played`, { limit });
+  public async getRecentlyPlayed(
+    limit: number = 20
+  ): Promise<SpotifyPaging<{ track: SpotifyTrack; played_at: string }>> {
+    return this.client.request<SpotifyPaging<{ track: SpotifyTrack; played_at: string }>>(
+      `/me/player/recently-played`,
+      { limit }
+    );
   }
 
   /**
    * Add an item to the playback queue.
    */
   public async queue(uri: string): Promise<void> {
-    await this.client.rawRequest(`/me/player/queue?uri=${encodeURIComponent(uri)}`, { method: 'POST' });
+    await this.client.rawRequest(`/me/player/queue?uri=${encodeURIComponent(uri)}`, {
+      method: 'POST',
+    });
   }
 }

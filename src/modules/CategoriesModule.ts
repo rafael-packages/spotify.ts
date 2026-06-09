@@ -16,7 +16,13 @@ export class CategoriesModule extends BaseModule {
   /**
    * Fetch lists of available Spotify browse categories.
    */
-  public async getMultiple(locale?: string, limit: number = 20): Promise<{ categories: SpotifyPaging<SpotifyCategory> }> {
-    return this.client.request<{ categories: SpotifyPaging<SpotifyCategory> }>(`/browse/categories`, { locale, limit });
+  public async getMultiple(
+    locale?: string,
+    limit: number = 20
+  ): Promise<{ categories: SpotifyPaging<SpotifyCategory> }> {
+    return this.client.request<{ categories: SpotifyPaging<SpotifyCategory> }>(
+      `/browse/categories`,
+      { locale, limit }
+    );
   }
 }

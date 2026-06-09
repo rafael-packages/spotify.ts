@@ -16,8 +16,14 @@ export class TrackModule extends BaseModule {
   /**
    * Fetch multiple tracks at once.
    */
-  public async getMultiple(ids: string[], market: string = 'US'): Promise<{ tracks: SpotifyTrack[] }> {
-    return this.client.request<{ tracks: SpotifyTrack[] }>(`/tracks`, { ids: ids.join(','), market });
+  public async getMultiple(
+    ids: string[],
+    market: string = 'US'
+  ): Promise<{ tracks: SpotifyTrack[] }> {
+    return this.client.request<{ tracks: SpotifyTrack[] }>(`/tracks`, {
+      ids: ids.join(','),
+      market,
+    });
   }
 
   /**
@@ -30,8 +36,12 @@ export class TrackModule extends BaseModule {
   /**
    * Fetch audio features for multiple tracks.
    */
-  public async getAudioFeaturesMultiple(ids: string[]): Promise<{ audio_features: SpotifyAudioFeatures[] }> {
-    return this.client.request<{ audio_features: SpotifyAudioFeatures[] }>(`/audio-features`, { ids: ids.join(',') });
+  public async getAudioFeaturesMultiple(
+    ids: string[]
+  ): Promise<{ audio_features: SpotifyAudioFeatures[] }> {
+    return this.client.request<{ audio_features: SpotifyAudioFeatures[] }>(`/audio-features`, {
+      ids: ids.join(','),
+    });
   }
 
   /**
@@ -44,7 +54,13 @@ export class TrackModule extends BaseModule {
   /**
    * Generate recommendations based on seed artists, tracks, or genres.
    */
-  public async getRecommendations(options: { seed_artists?: string; seed_genres?: string; seed_tracks?: string; limit?: number; market?: string }): Promise<{ tracks: SpotifyTrack[] }> {
+  public async getRecommendations(options: {
+    seed_artists?: string;
+    seed_genres?: string;
+    seed_tracks?: string;
+    limit?: number;
+    market?: string;
+  }): Promise<{ tracks: SpotifyTrack[] }> {
     return this.client.request<{ tracks: SpotifyTrack[] }>(`/recommendations`, options);
   }
 }

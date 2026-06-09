@@ -16,7 +16,13 @@ export class EpisodesModule extends BaseModule {
   /**
    * Fetch multiple podcast episodes by IDs.
    */
-  public async getMultiple(ids: string[], market: string = 'US'): Promise<{ episodes: SpotifyEpisode[] }> {
-    return this.client.request<{ episodes: SpotifyEpisode[] }>(`/episodes`, { ids: ids.join(','), market });
+  public async getMultiple(
+    ids: string[],
+    market: string = 'US'
+  ): Promise<{ episodes: SpotifyEpisode[] }> {
+    return this.client.request<{ episodes: SpotifyEpisode[] }>(`/episodes`, {
+      ids: ids.join(','),
+      market,
+    });
   }
 }

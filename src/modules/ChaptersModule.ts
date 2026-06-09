@@ -16,7 +16,13 @@ export class ChaptersModule extends BaseModule {
   /**
    * Fetch multiple audiobook chapters by IDs.
    */
-  public async getMultiple(ids: string[], market: string = 'US'): Promise<{ chapters: SpotifyChapter[] }> {
-    return this.client.request<{ chapters: SpotifyChapter[] }>(`/chapters`, { ids: ids.join(','), market });
+  public async getMultiple(
+    ids: string[],
+    market: string = 'US'
+  ): Promise<{ chapters: SpotifyChapter[] }> {
+    return this.client.request<{ chapters: SpotifyChapter[] }>(`/chapters`, {
+      ids: ids.join(','),
+      market,
+    });
   }
 }

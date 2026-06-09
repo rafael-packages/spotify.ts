@@ -23,7 +23,10 @@ export class ArtistModule extends BaseModule {
   /**
    * Fetch the top 10 tracks of the artist in the specified market.
    */
-  public async getTopTracks(id: string, market: string = 'BR'): Promise<{ tracks: SpotifyTrack[] }> {
+  public async getTopTracks(
+    id: string,
+    market: string = 'BR'
+  ): Promise<{ tracks: SpotifyTrack[] }> {
     return this.client.request<{ tracks: SpotifyTrack[] }>(`/artists/${id}/top-tracks`, { market });
   }
 
@@ -35,13 +38,19 @@ export class ArtistModule extends BaseModule {
     limit: number = 20,
     offset: number = 0
   ): Promise<SpotifyPaging<SpotifyAlbum>> {
-    return this.client.request<SpotifyPaging<SpotifyAlbum>>(`/artists/${id}/albums`, { limit, offset });
+    return this.client.request<SpotifyPaging<SpotifyAlbum>>(`/artists/${id}/albums`, {
+      limit,
+      offset,
+    });
   }
 
   /**
    * Returns an async iterator to paginate over artist's albums.
    */
-  public getAlbumsIterator(id: string, limit: number = 20): AsyncGenerator<SpotifyAlbum, void, unknown> {
+  public getAlbumsIterator(
+    id: string,
+    limit: number = 20
+  ): AsyncGenerator<SpotifyAlbum, void, unknown> {
     return this.paginate<SpotifyAlbum>((offset) => this.getAlbums(id, limit, offset));
   }
 

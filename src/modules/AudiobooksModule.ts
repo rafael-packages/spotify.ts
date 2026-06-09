@@ -16,14 +16,27 @@ export class AudiobooksModule extends BaseModule {
   /**
    * Fetch multiple audiobooks at once.
    */
-  public async getMultiple(ids: string[], market: string = 'US'): Promise<{ audiobooks: SpotifyAudiobook[] }> {
-    return this.client.request<{ audiobooks: SpotifyAudiobook[] }>(`/audiobooks`, { ids: ids.join(','), market });
+  public async getMultiple(
+    ids: string[],
+    market: string = 'US'
+  ): Promise<{ audiobooks: SpotifyAudiobook[] }> {
+    return this.client.request<{ audiobooks: SpotifyAudiobook[] }>(`/audiobooks`, {
+      ids: ids.join(','),
+      market,
+    });
   }
 
   /**
    * Fetch audiobook chapters by ID.
    */
-  public async getChapters(id: string, market: string = 'US', limit: number = 20): Promise<SpotifyPaging<SpotifyChapter>> {
-    return this.client.request<SpotifyPaging<SpotifyChapter>>(`/audiobooks/${id}/chapters`, { market, limit });
+  public async getChapters(
+    id: string,
+    market: string = 'US',
+    limit: number = 20
+  ): Promise<SpotifyPaging<SpotifyChapter>> {
+    return this.client.request<SpotifyPaging<SpotifyChapter>>(`/audiobooks/${id}/chapters`, {
+      market,
+      limit,
+    });
   }
 }

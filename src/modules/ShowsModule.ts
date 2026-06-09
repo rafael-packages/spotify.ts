@@ -16,14 +16,24 @@ export class ShowsModule extends BaseModule {
   /**
    * Fetch multiple shows by IDs.
    */
-  public async getMultiple(ids: string[], market: string = 'US'): Promise<{ shows: SpotifyShow[] }> {
+  public async getMultiple(
+    ids: string[],
+    market: string = 'US'
+  ): Promise<{ shows: SpotifyShow[] }> {
     return this.client.request<{ shows: SpotifyShow[] }>(`/shows`, { ids: ids.join(','), market });
   }
 
   /**
    * Fetch episodes of a show.
    */
-  public async getEpisodes(id: string, market: string = 'US', limit: number = 20): Promise<SpotifyPaging<SpotifyEpisode>> {
-    return this.client.request<SpotifyPaging<SpotifyEpisode>>(`/shows/${id}/episodes`, { market, limit });
+  public async getEpisodes(
+    id: string,
+    market: string = 'US',
+    limit: number = 20
+  ): Promise<SpotifyPaging<SpotifyEpisode>> {
+    return this.client.request<SpotifyPaging<SpotifyEpisode>>(`/shows/${id}/episodes`, {
+      market,
+      limit,
+    });
   }
 }
