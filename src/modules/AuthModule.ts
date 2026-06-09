@@ -10,14 +10,14 @@ export interface SpotifyTokenResponse {
 
 /**
  * AuthModule
- * Utilitários para você plugar no seu frontend/backend caso precise de autenticação de usuário (OAuth 2).
+ * OAuth 2 authorization utilities for Spotify user authentication.
  */
 export class AuthModule extends BaseModule {
   private readonly authUrl = 'https://accounts.spotify.com/authorize';
   private readonly tokenUrl = 'https://accounts.spotify.com/api/token';
 
   /**
-   * Gera a URL que você deve redirecionar o usuário para ele fazer login no Spotify.
+   * Generate login URL to redirect the user to Spotify OAuth.
    */
   public getLoginUrl(redirectUri: string, scopes: string[] = [], state?: string): string {
     const params = new URLSearchParams({
@@ -35,7 +35,7 @@ export class AuthModule extends BaseModule {
   }
 
   /**
-   * Troca o código (que o Spotify manda de volta no redirecionamento) por um token real de acesso.
+   * Exchange the authorization code returned by Spotify redirect callback for access and refresh tokens.
    */
   public async exchangeCode(code: string, redirectUri: string): Promise<SpotifyTokenResponse> {
     const auth = btoa(`${this.client.options.clientId}:${this.client.options.clientSecret}`);
@@ -54,14 +54,14 @@ export class AuthModule extends BaseModule {
     });
 
     if (!response.ok) {
-      throw new Error(`Falha ao trocar o código: ${response.statusText}`);
+      throw new Error(`Failed to exchange code: ${response.statusText}`);
     }
 
     return response.json();
   }
 
   /**
-   * Renova o token de acesso caso ele tenha expirado (usando o refresh token antigo).
+   * Refresh an expired access token using the refresh token.
    */
   public async refreshToken(refreshToken: string): Promise<SpotifyTokenResponse> {
     const auth = btoa(`${this.client.options.clientId}:${this.client.options.clientSecret}`);
@@ -79,7 +79,7 @@ export class AuthModule extends BaseModule {
     });
 
     if (!response.ok) {
-      throw new Error(`Falha ao renovar o token: ${response.statusText}`);
+      throw new Error(`Failed to refresh token: ${response.statusText}`);
     }
 
     return response.json();

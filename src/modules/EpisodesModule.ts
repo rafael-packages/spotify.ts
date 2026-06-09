@@ -3,18 +3,18 @@ import type { SpotifyEpisode } from '../types';
 
 /**
  * EpisodesModule
- * Acesso a episódios de podcasts.
+ * Access podcast episode details.
  */
 export class EpisodesModule extends BaseModule {
   /**
-   * Pega um episódio pelo ID.
+   * Fetch a podcast episode by ID.
    */
   public async get(id: string, market: string = 'US'): Promise<SpotifyEpisode> {
     return this.client.request<SpotifyEpisode>(`/episodes/${id}`, { market });
   }
 
   /**
-   * Pega múltiplos episódios de uma vez.
+   * Fetch multiple podcast episodes by IDs.
    */
   public async getMultiple(ids: string[], market: string = 'US'): Promise<{ episodes: SpotifyEpisode[] }> {
     return this.client.request<{ episodes: SpotifyEpisode[] }>(`/episodes`, { ids: ids.join(','), market });

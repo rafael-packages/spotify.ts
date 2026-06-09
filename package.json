@@ -1,7 +1,15 @@
 {
   "name": "@rafaelsilvadeveloper/spotify.ts",
   "version": "1.0.0",
-  "description": "Um client TypeScript fortemente tipado para a API do Spotify com suporte automático a OAuth2",
+  "description": "A strongly typed TypeScript client for the Spotify API with automatic OAuth2 support",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realkalashnikov/spotify.ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/realkalashnikov/spotify.ts/issues"
+  },
+  "homepage": "https://github.com/realkalashnikov/spotify.ts#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
