@@ -4,12 +4,12 @@
   "description": "A strongly typed, zero-dependency TypeScript client for the Spotify API with automatic OAuth2 support, featuring rate limiting, caching, and async iterators.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/realkalashnikov/spotify.ts.git"
+    "url": "git+https://github.com/rafael-packages/spotify.ts.git"
   },
   "bugs": {
-    "url": "https://github.com/realkalashnikov/spotify.ts/issues"
+    "url": "https://github.com/rafael-packages/spotify.ts/issues"
   },
-  "homepage": "https://github.com/realkalashnikov/spotify.ts#readme",
+  "homepage": "https://github.com/rafael-packages/spotify.ts#readme",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
